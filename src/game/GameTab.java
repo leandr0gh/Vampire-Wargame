@@ -84,6 +84,9 @@ public class GameTab extends JPanel {
         retireButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         logArea = new JTextArea(10, 18);
+        logArea.setBackground(Color.BLACK);
+        logArea.setForeground(Color.WHITE);
+        logArea.setCaretColor(Color.WHITE);
         logArea.setEditable(false);
         logArea.setLineWrap(true);
         logArea.setWrapStyleWord(true);
@@ -318,6 +321,7 @@ public class GameTab extends JPanel {
         }
 
         partida.endTurn();
+        appendLog("--- Turno de " + partida.getCurrentPlayer().getUsername() + " ---");
         currentSpinResult = null;
         setStatus(partida.getCurrentPlayer().getUsername() + ", es tu turno.");
         rouletteButton.setEnabled(true);
@@ -331,7 +335,7 @@ public class GameTab extends JPanel {
                 JLabel cell = cells[row][col];
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
                 if ((row+col) %2 == 0) {
-                    cell.setBackground(Color.WHITE);
+                    cell.setBackground(new Color(225, 210, 180));
                 } else {
                 cell.setBackground(new Color(70,70,70));
                 }
