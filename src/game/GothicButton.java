@@ -12,7 +12,7 @@ public final class GothicButton extends JButton {
     public GothicButton(String text) {
         super(text);
         setFont(FontLoader.getButtonFont(20f));
-        setForeground(new Color(200, 170, 110)); // dorado apagado
+        setForeground(new Color(200, 170, 110));
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorderPainted(false);

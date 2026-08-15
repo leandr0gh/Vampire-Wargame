@@ -12,7 +12,7 @@ public class GameTab extends JPanel {
     private Partida partida;
     private JLabel[][] cells = new JLabel[6][6];
     private JTextArea logArea;
-    private JButton retireButton;
+    private GothicButton retireButton;
     private int selectedRow = -1;
     private int selectedCol = -1;
     private int selectedZombieRow = -1;
@@ -22,20 +22,21 @@ public class GameTab extends JPanel {
     private JLabel statusLabel;
     private JLabel rouletteLabel;
     private RouletteWheelPanel wheelPanel;
-    private JButton rouletteButton;
+    private GothicButton rouletteButton;
 
     private Roulette.RouletteResult currentSpinResult;
 
     private JPanel setupRoulette() {
         wheelPanel = new RouletteWheelPanel();
-        rouletteButton = new JButton("Detener");
+        wheelPanel.setOpaque(true);
+        wheelPanel.setBackground(new Color(30, 30, 30));
+        rouletteButton = new GothicButton("Detener");
         rouletteButton.setFocusable(false);
 
         JPanel roulettePanel = new JPanel(new BorderLayout());
         roulettePanel.add(wheelPanel, BorderLayout.CENTER);
         roulettePanel.add(rouletteButton, BorderLayout.SOUTH);
 
-        //add(roulettePanel, BorderLayout.WEST);
         rouletteButton.addActionListener(e -> {
             rouletteButton.setEnabled(false);
             currentSpinResult = partida.spinRoulette();
@@ -70,7 +71,7 @@ public class GameTab extends JPanel {
     }
 
     private void setupSidePanel() {
-        retireButton = new JButton("Retirarse de la partida");
+        retireButton = new GothicButton("Rendirse");
         retireButton.addActionListener(e -> {
             int confirm = JOptionPane.showConfirmDialog(this,
                     "¿Seguro que deseas retirarte? El otro jugador ganará automáticamente.",
@@ -228,11 +229,11 @@ public class GameTab extends JPanel {
                     int eleccion = JOptionPane.showOptionDialog(this, "Que deseas hacer?", "Necromante", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
                     if (eleccion == 0) {
                         gameBoard.movePiece(selectedRow, selectedCol, row, col);
-                        appendLog("El jugador " + partida.getCurrentPlayer().getUsername() + " movió su pieza " + attacker.getSymbol() + " a la casilla (" + (row+1) + "," + (col+1) + ").");
+                        appendLog("El jugador " + partida.getCurrentPlayer().getUsername() + " movió su pieza " + attacker.getSymbol() + " a la casilla (" + (row + 1) + "," + (col + 1) + ").");
                         finishAction();
                     } else if (eleccion == 1) {
                         gameBoard.invokeZombie(selectedRow, selectedCol, row, col);
-                        appendLog("El jugador " + partida.getCurrentPlayer().getUsername() + " invocó un Zombie en la casilla (" + (row+1) + "," + col+1 + ").");
+                        appendLog("El jugador " + partida.getCurrentPlayer().getUsername() + " invocó un Zombie en la casilla (" + (row + 1) + "," + col + 1 + ").");
                         finishAction();
                     }
 
@@ -240,7 +241,7 @@ public class GameTab extends JPanel {
                     int confirmar = JOptionPane.showConfirmDialog(this, "Invocar Zombie en esta casilla?", "Invocar Zombie", JOptionPane.YES_NO_OPTION);
                     if (confirmar == JOptionPane.YES_OPTION) {
                         gameBoard.invokeZombie(selectedRow, selectedCol, row, col);
-                        appendLog("Se invocó un Zombie en la casilla (" + (row+1) + "," + (col+1) + ").");
+                        appendLog("Se invocó un Zombie en la casilla (" + (row + 1) + "," + (col + 1) + ").");
                         finishAction();
                     }
 
@@ -248,7 +249,7 @@ public class GameTab extends JPanel {
             } else {
                 boolean moved = gameBoard.movePiece(selectedRow, selectedCol, row, col);
                 if (moved) {
-                    appendLog("Se movió la pieza " + attacker.getSymbol() + " a la casilla (" + (row+1) + "," + (col+1) + ").");
+                    appendLog("Se movió la pieza " + attacker.getSymbol() + " a la casilla (" + (row + 1) + "," + (col + 1) + ").");
                     finishAction();
                 } else {
 
@@ -304,7 +305,6 @@ public class GameTab extends JPanel {
                     + "; le quedan " + partes[2] + " puntos de escudo y " + partes[3] + " de vida");
         }
     }
-    
 
     private void finishAction() {
         refreshBoard();
@@ -334,10 +334,10 @@ public class GameTab extends JPanel {
                 Piece piece = gameBoard.getPieceAt(row, col);
                 JLabel cell = cells[row][col];
                 cell.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-                if ((row+col) %2 == 0) {
+                if ((row + col) % 2 == 0) {
                     cell.setBackground(new Color(225, 210, 180));
                 } else {
-                cell.setBackground(new Color(70,70,70));
+                    cell.setBackground(new Color(70, 70, 70));
                 }
 
                 if (piece != null) {
@@ -364,7 +364,7 @@ public class GameTab extends JPanel {
     private void logAttackResult(String resultado) {
         String[] partes = resultado.split(":");
         String attacker = partida.getCurrentPlayer().getUsername();
-        
+
         if (partes[0].equals("DESTROYED")) {
             Piece.PieceColor color = Piece.PieceColor.valueOf(partes[2]);
             String defender = partida.getPlayerByColor(color).getUsername();
@@ -372,7 +372,7 @@ public class GameTab extends JPanel {
         } else if (partes[0].equals("DAMAGED")) {
             Piece.PieceColor color = Piece.PieceColor.valueOf(partes[5]);
             String defender = partida.getPlayerByColor(color).getUsername();
-            appendLog("El jugador " + attacker + "ataco la pieza" + partes[1] + " del jugador " + defender + "y le quito" + partes[2]
+            appendLog("El jugador " + attacker + " ataco la pieza " + partes[1] + " del jugador " + defender + " y le quito " + partes[2]
                     + " puntos; le quedan " + partes[3] + " puntos de escudo y " + partes[4] + " de vida.");
         }
     }
@@ -381,7 +381,6 @@ public class GameTab extends JPanel {
         logArea.append(text + "\n");
         logArea.setCaretPosition(logArea.getDocument().getLength());
     }
-    
 
     //zombie handlers
     private void highlightZombieTargets(int zombieRow, int zombieCol) {

@@ -13,13 +13,20 @@ public class ReportesTab extends JPanel {
         background = new ImageIcon(getClass().getResource("/resources/vampirewargamemainbg.png")).getImage();
 
         setLayout(new BorderLayout());
+        setBackground(new Color(30,30,30));
+        JLabel title = new JLabel("Reportes", SwingConstants.CENTER);
+        GothicUI.styleTitle(title, 32f);
+        add(title, BorderLayout.NORTH);
+        
         GothicButton returnButton = new GothicButton("Volver");
         returnButton.addActionListener(e -> window.showWindow(MainWindow.mainMenu));
         
         //new stuff
         JTabbedPane tabs = new JTabbedPane();
+        tabs.setFont(FontLoader.getButtonFont(16f));
         tabs.addTab("Ranking", buildRankingPanel(playerManager));
         tabs.addTab("Mi historial", buildHistorialPanel(window, playerManager));
+        tabs.setBackground(Color.GRAY);
         add(tabs, BorderLayout.CENTER);
         add(returnButton, BorderLayout.SOUTH);
         
@@ -37,6 +44,10 @@ public class ReportesTab extends JPanel {
         }
         JTable tabla = new JTable(datos, columnas);
         tabla.setEnabled(false);
+        tabla.setFont(FontLoader.getButtonFont(15f));
+        tabla.setRowHeight(30);
+        tabla.setBackground(new Color(20,20,20));
+        tabla.setForeground(Color.white);
         
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JScrollPane(tabla), BorderLayout.CENTER);
@@ -49,6 +60,9 @@ public class ReportesTab extends JPanel {
 
         JTextArea area = new JTextArea();
         area.setEditable(false);
+        area.setFont(FontLoader.getButtonFont(15f));
+        area.setBackground(Color.BLACK);
+        area.setForeground(Color.WHITE);
 
         if (historial.isEmpty()) {
             area.setText("Aún no has jugado ninguna partida.");
