@@ -72,7 +72,7 @@ public class MainMenuTab extends JPanel {
         logOffButton.addActionListener(e -> {
             int confirmation = JOptionPane.showConfirmDialog(this, "Seguro que quieres cerrar sesion?", "Confirmacion", JOptionPane.YES_NO_OPTION);
             if (confirmation == JOptionPane.YES_OPTION) {
-                window.showWindow(MainWindow.login);
+                window.showWindow(MainWindow.startMenu);
             }
         });
     }

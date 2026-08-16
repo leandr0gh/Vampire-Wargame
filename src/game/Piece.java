@@ -56,8 +56,9 @@ public abstract class Piece {
     int rowDiff = Math.abs(toRow - fromRow);
     int colDiff = Math.abs(toCol - fromCol);
     int maxDiff = Math.max(rowDiff, colDiff);
+    boolean straightLine = (rowDiff == 0 || colDiff == 0 || rowDiff == colDiff);
     
-    return maxDiff > 0 && maxDiff <= getMovementRange();
+    return straightLine && maxDiff > 0 && maxDiff <= getMovementRange();
 }
    
 
