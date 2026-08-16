@@ -2,6 +2,7 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.format.DateTimeFormatter;
 
 public class MyAccountTab extends JPanel {
 
@@ -22,7 +23,8 @@ public class MyAccountTab extends JPanel {
         GothicUI.styleLabel(usernameLabel);
         JLabel pointsLabel = new JLabel("Puntos: " + current.getPuntos());
         GothicUI.styleLabel(pointsLabel);
-        JLabel registerDate = new JLabel("Fecha de Ingreso: " + current.getFechaIngreso());
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        JLabel registerDate = new JLabel("Fecha de Ingreso: " + current.getFechaIngreso().format(format));
         GothicUI.styleLabel(registerDate);
 
         GothicButton changePasswordButton = new GothicButton("Cambiar Contraseña");
