@@ -22,7 +22,7 @@ public class StartMenuTab extends JPanel {
         GothicButton loginButton = new GothicButton("Iniciar Sesión");
         GothicButton createUserButton = new GothicButton("Crear Usuario");
         GothicButton exitButton = new GothicButton("Salir");
-        
+     
         gbc.gridx=0;
         gbc.gridy=0;
         add(title, gbc);
@@ -33,7 +33,7 @@ public class StartMenuTab extends JPanel {
         add(createUserButton, gbc);
         gbc.gridy=3;
         add(exitButton, gbc);
-        
+      
         loginButton.addActionListener(e -> window.showWindow(MainWindow.login));
         createUserButton.addActionListener(e -> window.showWindow(MainWindow.crearJugador));
         exitButton.addActionListener(e -> System.exit(0));    
