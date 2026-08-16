@@ -13,6 +13,7 @@ public class GameTab extends JPanel {
     private JLabel[][] cells = new JLabel[6][6];
     private JTextArea logArea;
     private GothicButton retireButton;
+    private JLabel turnLabel;
     private int selectedRow = -1;
     private int selectedCol = -1;
     private int selectedZombieRow = -1;
@@ -35,7 +36,16 @@ public class GameTab extends JPanel {
 
         JPanel roulettePanel = new JPanel(new BorderLayout());
         roulettePanel.add(wheelPanel, BorderLayout.CENTER);
-        roulettePanel.add(rouletteButton, BorderLayout.SOUTH);
+        //roulettePanel.add(rouletteButton, BorderLayout.SOUTH);
+        turnLabel = new JLabel("", SwingConstants.CENTER);
+        turnLabel.setFont(FontLoader.getButtonFont(14f));
+        turnLabel.setForeground(GothicUI.GOLD);
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(rouletteButton, BorderLayout.NORTH);
+        bottomPanel.add(turnLabel, BorderLayout.SOUTH);
+        
+        roulettePanel.add(bottomPanel, BorderLayout.SOUTH);
 
         rouletteButton.addActionListener(e -> {
             rouletteButton.setEnabled(false);
@@ -51,9 +61,11 @@ public class GameTab extends JPanel {
                         wheelPanel.startContinuousSpin();
                     } else {
                         partida.endTurn();
+                        updateTurnLabel();
                         currentSpinResult = null;
                         setStatus("Pierdes el turno. Ahora le toca a: " + partida.getCurrentPlayer().getUsername());
                         rouletteButton.setEnabled(true);
+                        updateTurnLabel();
                         wheelPanel.startContinuousSpin();
 
                     }
@@ -65,6 +77,7 @@ public class GameTab extends JPanel {
         });
         wheelPanel.startContinuousSpin();
         setStatus(partida.getCurrentPlayer().getUsername() + ", presiona Detener para detener");
+        updateTurnLabel();
 
         return roulettePanel;
 
@@ -322,6 +335,7 @@ public class GameTab extends JPanel {
 
         partida.endTurn();
         appendLog("--- Turno de " + partida.getCurrentPlayer().getUsername() + " ---");
+        updateTurnLabel();
         currentSpinResult = null;
         setStatus(partida.getCurrentPlayer().getUsername() + ", es tu turno.");
         rouletteButton.setEnabled(true);
@@ -427,6 +441,10 @@ public class GameTab extends JPanel {
         logAttackResult(resultado);
         finishAction();
     }
+    
+    private void updateTurnLabel() {
+    turnLabel.setText("Turno de: " + partida.getCurrentPlayer().getUsername());
+}
 
     //for piece iamges
     private String getImagePath(Piece piece) {
